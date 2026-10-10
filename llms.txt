@@ -24,6 +24,7 @@
 - [references/components.md](references/components.md): HTML for every course component
 - [assets/template.html](assets/template.html): the course template (CSS + JS built in)
 - [scripts/fetch-transcript.mjs](scripts/fetch-transcript.mjs): zero-dependency transcript fetcher (Node 18+)
+- [examples/neural-networks-explained-course.html](examples/neural-networks-explained-course.html): real example course from 3Blue1Brown's "But what is a neural network?"
 - [examples/sourdough-101.html](examples/sourdough-101.html): finished example course (fictional video)
 
 ## Related

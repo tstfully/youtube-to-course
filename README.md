@@ -8,7 +8,7 @@
 [![Claude skill](https://img.shields.io/badge/Claude-skill-d9822b)](#-get-started-in-60-seconds)
 [![Works with](https://img.shields.io/badge/works%20with-Claude%20Code%20·%20Claude.ai%20·%20Cursor-5f655f)](#-get-started-in-60-seconds)
 
-<img src="docs/hero.png" alt="An interactive course called Sourdough 101 on desktop and phone." width="820">
+<img src="docs/real-hero.png" alt="A real interactive course made from 3Blue1Brown's video But what is a neural network?" width="820">
 
 **Learn a 1-hour video in 15 minutes, and actually remember it.** 🧠
 <br>Lectures, tutorials, podcasts, and talks become bite-sized lessons with quizzes that check you really get it.
@@ -33,9 +33,17 @@ One HTML file. Open it in any browser, on any device. No app, no login, no LMS.
 | 📣 **Share your score** | One tap to brag 😄 |
 | 🌗 **Light & dark mode** | Mobile-friendly and printable |
 
-<img src="docs/gallery.png" alt="Course screens: a metaphor block, a quiz with confetti, flip flashcards, and the final score." width="100%">
+## 👀 See a real example
 
-👉 **[See the full example course](examples/sourdough-101.html)** (download it and open in your browser): *Sourdough 101*, built from a fictional baking video. Try the quizzes!
+**🧠 [Neural Networks, Explained](examples/neural-networks-explained-course.html)**, made from 3Blue1Brown's *[But what is a neural network?](https://www.youtube.com/watch?v=aircAruvnKk)*. 4 modules, quizzes, flashcards, and 28 timestamp links back to the video. Download it and open it in your browser.
+
+<img src="docs/real-gallery.png" alt="Screens from the Neural Networks course: a metaphor block, a quiz, flashcards, and the final score." width="100%">
+
+<sub>Video and short quotes © 3Blue1Brown, used briefly for teaching with links back to the original. Go watch it, it's brilliant.</sub>
+
+**🍞 Second example: [Sourdough 101](examples/sourdough-101.html)**, built from a fictional baking video. Try the quizzes!
+
+<img src="docs/gallery.png" alt="Course screens: a metaphor block, a quiz with confetti, flip flashcards, and the final score." width="100%">
 
 ---
 

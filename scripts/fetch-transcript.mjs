@@ -32,7 +32,7 @@ if (!apiKey) {
   );
 }
 
-const body = { video, format: "timestamp" };
+const body = { video, format: { timestamp: true } };
 if (language) body.language = language;
 
 const res = await fetch(API_URL, {
@@ -70,23 +70,31 @@ if (data?.status && data.status !== "completed") {
   );
 }
 
-const rawSegments = Array.isArray(data?.transcript)
-  ? data.transcript
-  : Array.isArray(data?.segments)
-    ? data.segments
-    : [];
+// v2 shape: data.transcript = { text, language, source, segments: [{ start, end, text }] },
+// with start/end in milliseconds. Older or alternate shapes are handled defensively.
+const transcript = data?.transcript;
+const rawSegments = Array.isArray(transcript?.segments)
+  ? transcript.segments
+  : Array.isArray(transcript)
+    ? transcript
+    : Array.isArray(data?.segments)
+      ? data.segments
+      : [];
 
 const segments = rawSegments
   .map((s) => ({
-    start: Math.floor(Number(s.start ?? s.offset ?? 0)),
+    // The v2 API reports start in milliseconds.
+    start: Math.floor(Number(s.start ?? s.offset ?? 0) / 1000),
     text: String(s.text ?? "").replace(/\s+/g, " ").trim(),
   }))
   .filter((s) => s.text);
 
 const text =
-  typeof data?.text === "string" && data.text
-    ? data.text
-    : segments.map((s) => s.text).join(" ");
+  typeof transcript?.text === "string" && transcript.text
+    ? transcript.text
+    : typeof data?.text === "string" && data.text
+      ? data.text
+      : segments.map((s) => s.text).join(" ");
 
 if (!text) {
   fail("No transcript text returned for this video.");
@@ -102,7 +110,7 @@ function videoIdFrom(input) {
 const out = {
   video_id: data?.video_id ?? data?.videoId ?? videoIdFrom(video),
   title: data?.video_title ?? data?.title ?? null,
-  language: data?.language ?? language ?? null,
+  language: transcript?.language ?? data?.language ?? language ?? null,
   segments,
   text,
 };
