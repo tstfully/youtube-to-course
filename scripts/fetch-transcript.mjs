@@ -92,8 +92,15 @@ if (!text) {
   fail("No transcript text returned for this video.");
 }
 
+// Fall back to the ID in the URL the user passed if the API doesn't echo it.
+function videoIdFrom(input) {
+  const m = String(input).match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([A-Za-z0-9_-]{11})/);
+  if (m) return m[1];
+  return /^[A-Za-z0-9_-]{11}$/.test(input) ? input : null;
+}
+
 const out = {
-  video_id: data?.video_id ?? data?.videoId ?? null,
+  video_id: data?.video_id ?? data?.videoId ?? videoIdFrom(video),
   title: data?.video_title ?? data?.title ?? null,
   language: data?.language ?? language ?? null,
   segments,
