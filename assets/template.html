@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Replace with the course title and a one-sentence summary -->
+  <title>COURSE TITLE</title>
+  <meta name="description" content="ONE-SENTENCE SUMMARY">
+  <meta name="generator" content="youtube-to-course (https://github.com/tstfully/youtube-to-course)">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f6f4ee;
+      --surface: #ffffff;
+      --surface-2: #efece4;
+      --ink: #1b1f1d;
+      --muted: #5f655f;
+      --line: #dcd8cd;
+      --accent: #1f7a5c;
+      --accent-ink: #ffffff;
+      --accent-soft: #dcefe6;
+      --warm: #d9822b;
+      --warm-soft: #f8e7d3;
+      --good: #1f7a5c;
+      --good-soft: #dcefe6;
+      --bad: #b54034;
+      --bad-soft: #f6dedb;
+      --display: "Bricolage Grotesque", system-ui, sans-serif;
+      --body: "Inter", system-ui, -apple-system, sans-serif;
+      --radius: 14px;
+      --content: 720px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #131614; --surface: #1c201e; --surface-2: #242926; --ink: #ecefe9; --muted: #a0a8a2;
+        --line: #333a36; --accent: #5cc79d; --accent-ink: #0f1311; --accent-soft: #1d3329;
+        --warm: #f0a35a; --warm-soft: #3a2a1a; --good: #5cc79d; --good-soft: #1d3329; --bad: #ec8579; --bad-soft: #3b201d;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #131614; --surface: #1c201e; --surface-2: #242926; --ink: #ecefe9; --muted: #a0a8a2;
+      --line: #333a36; --accent: #5cc79d; --accent-ink: #0f1311; --accent-soft: #1d3329;
+      --warm: #f0a35a; --warm-soft: #3a2a1a; --good: #5cc79d; --good-soft: #1d3329; --bad: #ec8579; --bad-soft: #3b201d;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+    h1, h2, h3 { font-family: var(--display); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 0.5em; }
+    h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 800; }
+    h2 { font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 800; }
+    h3 { font-size: 1.15rem; font-weight: 600; }
+    p { margin: 0 0 1em; }
+    a { color: var(--accent); }
+    .wrap { max-width: var(--content); margin: 0 auto; padding: 0 16px; }
+
+    /* top bar */
+    .topbar { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .topbar-inner { max-width: 1040px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 14px; }
+    .topbar .brand { font: 600 14px var(--display); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; }
+    .dots { display: flex; gap: 6px; flex: none; }
+    .dots a { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 600 12px var(--body); text-decoration: none; color: var(--muted); border: 1px solid var(--line); background: var(--surface); }
+    .dots a.active { border-color: var(--accent); color: var(--accent); }
+    .dots a.done { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+    .theme-btn { flex: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; width: 32px; height: 32px; cursor: pointer; font-size: 15px; }
+    .progress { height: 3px; background: var(--accent); width: 0; transition: width 0.15s linear; }
+
+    /* hero */
+    .hero { padding: 72px 0 40px; }
+    .eyebrow { font: 600 12px var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .hero .promise { font-size: 1.2rem; color: var(--muted); max-width: 34em; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+    .pill { font: 500 13px var(--body); padding: 5px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
+    .source-card { display: flex; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; text-decoration: none; color: var(--ink); max-width: 520px; }
+    .source-card img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; flex: none; background: var(--surface-2); }
+    .source-card small { color: var(--muted); display: block; }
+    .outcomes { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 8px; }
+    .outcomes li { padding-left: 28px; position: relative; }
+    .outcomes li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    /* modules */
+    .module { padding: 64px 0; border-top: 1px solid var(--line); }
+    .module-num { font: 800 64px/1 var(--display); color: var(--accent); opacity: 0.9; margin-bottom: 8px; }
+    .why { background: var(--warm-soft); border-radius: var(--radius); padding: 14px 16px; margin: 0 0 28px; font-weight: 500; }
+    .why::before { content: "Why this matters · "; color: var(--warm); font-weight: 600; }
+    .screen { margin: 36px 0; }
+    .lead { font-size: 1.15rem; }
+
+    /* timestamp chip */
+    a.ts { display: inline-flex; align-items: center; gap: 4px; font: 600 12px var(--body); padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 2px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    a.ts::before { content: "▶"; font-size: 9px; }
+    a.ts:hover { background: var(--accent); color: var(--accent-ink); }
+
+    /* concept + metaphor */
+    .concept { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .concept > div { border-radius: var(--radius); padding: 18px; }
+    .concept .metaphor { background: var(--warm-soft); }
+    .concept .reality { background: var(--surface); border: 1px solid var(--line); }
+    .concept .label { font: 600 11px var(--body); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; display: block; }
+    .concept .metaphor .label { color: var(--warm); }
+    .concept .reality .label { color: var(--accent); }
+    .concept p { margin: 0; }
+
+    /* key moment */
+    .moment { border-left: 4px solid var(--accent); background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 18px; }
+    .moment blockquote { margin: 0 0 8px; font: 600 1.2rem/1.35 var(--display); }
+    .moment .who { color: var(--muted); font-size: 14px; }
+
+    /* cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+    .card .icon { font-size: 26px; display: block; margin-bottom: 6px; }
+    .card p { color: var(--muted); font-size: 15px; margin: 0; }
+
+    /* steps */
+    ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 10px; }
+    ol.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; }
+    ol.steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 700; }
+    ol.steps strong { display: block; }
+    ol.steps span { color: var(--muted); font-size: 15px; }
+
+    /* compare */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .compare > div { border-radius: var(--radius); padding: 16px; }
+    .compare .left { background: var(--bad-soft); }
+    .compare .right { background: var(--good-soft); }
+    .compare .label { font: 600 11px var(--body); letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+    .compare .left .label { color: var(--bad); }
+    .compare .right .label { color: var(--good); }
+    .compare p { margin: 0; }
+
+    /* callout */
+    .callout { border-radius: var(--radius); padding: 14px 16px; background: var(--surface-2); }
+    .callout.tip::before { content: "💡 "; }
+    .callout.warn { background: var(--bad-soft); }
+    .callout.warn::before { content: "⚠️ "; }
+
+    /* glossary */
+    .term { border-bottom: 2px dotted var(--accent); cursor: help; position: relative; }
+    .term:focus { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+    .term::after { content: attr(data-def); position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); width: max-content; max-width: min(280px, 80vw); background: var(--ink); color: var(--bg); font: 400 14px/1.45 var(--body); padding: 10px 12px; border-radius: 10px; opacity: 0; pointer-events: none; transition: opacity 0.15s; z-index: 10; }
+    .term:hover::after, .term:focus::after { opacity: 1; }
+
+    /* quiz */
+    .quiz { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+    .quiz .q-label { font: 600 11px var(--body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm); margin-bottom: 6px; }
+    .quiz h3 { font-size: 1.15rem; }
+    .quiz .options { display: grid; gap: 8px; margin-top: 12px; }
+    .quiz button.opt { text-align: left; font: 500 16px var(--body); color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; }
+    .quiz button.opt:hover:not(:disabled) { border-color: var(--accent); }
+    .quiz button.opt.correct { background: var(--good-soft); border-color: var(--good); }
+    .quiz button.opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+    .quiz button.opt:disabled { cursor: default; }
+    .quiz .explain { display: none; margin-top: 12px; padding: 12px 14px; border-radius: 10px; background: var(--surface-2); font-size: 15px; }
+    .quiz.answered .explain { display: block; }
+
+    /* flashcards */
+    .flashcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .flashcard { perspective: 900px; min-height: 150px; cursor: pointer; border: 0; padding: 0; background: none; font: inherit; color: inherit; text-align: left; }
+    .flashcard { display: block; width: 100%; }
+    .flashcard .inner { display: block; position: relative; width: 100%; height: 100%; min-height: 150px; transition: transform 0.45s; transform-style: preserve-3d; }
+    .flashcard.flipped .inner { transform: rotateY(180deg); }
+    .flashcard .face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; justify-content: center; }
+    .flashcard .front { background: var(--surface); border: 1px solid var(--line); font: 600 1.05rem var(--display); }
+    .flashcard .front::after { content: "Tap to flip"; font: 500 12px var(--body); color: var(--muted); margin-top: 8px; }
+    .flashcard .back { background: var(--accent); color: var(--accent-ink); transform: rotateY(180deg); font-size: 15px; }
+
+    /* recap checklist */
+    .recap { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+    .recap label { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; cursor: pointer; }
+    .recap input { width: 20px; height: 20px; accent-color: var(--accent); margin-top: 3px; flex: none; }
+
+    /* finish */
+    .finish { padding: 72px 0 96px; border-top: 1px solid var(--line); text-align: center; }
+    .finish .score { font: 800 56px/1 var(--display); color: var(--accent); margin: 12px 0; }
+    .next-btn { display: inline-block; margin-top: 18px; padding: 12px 20px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; }
+    .module-next { margin-top: 36px; }
+
+    footer.credit { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 16px 40px; }
+    footer.credit a { color: var(--muted); }
+
+    @media (max-width: 640px) {
+      .concept, .compare { grid-template-columns: 1fr; }
+      .dots { display: none; }
+      .source-card img { width: 96px; }
+      .module { padding: 48px 0; }
+    }
+    @media print {
+      .topbar, .theme-btn, .module-next { display: none; }
+      .quiz .explain { display: block; }
+      .flashcard .inner { transform: none !important; }
+      .flashcard .back { position: static; transform: none; margin-top: 8px; }
+      .flashcard .front::after { content: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">COURSE TITLE</span>
+      <nav class="dots" aria-label="Modules"></nav>
+      <button class="theme-btn" type="button" aria-label="Toggle dark mode">◐</button>
+    </div>
+    <div class="progress" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <!-- HERO: fill in from the video -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Interactive course</p>
+        <h1>Course title</h1>
+        <p class="promise">One sentence on what the learner will be able to do after this course.</p>
+        <div class="meta">
+          <span class="pill">5 modules</span>
+          <span class="pill">~20 min</span>
+          <span class="pill">Beginner</span>
+        </div>
+        <a class="source-card" href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank" rel="noopener">
+          <img src="https://i.ytimg.com/vi/VIDEO_ID/mqdefault.jpg" alt="">
+          <span><strong>Video title</strong><small>Channel name · 42 min</small></span>
+        </a>
+        <ul class="outcomes">
+          <li>Outcome one</li>
+          <li>Outcome two</li>
+          <li>Outcome three</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- MODULES GO HERE. Use only the patterns in references/components.md. -->
+
+    <section class="finish" id="finish">
+      <div class="wrap">
+        <p class="eyebrow">Course complete</p>
+        <h2>Nice work.</h2>
+        <p>Your quiz score</p>
+        <p class="score" data-score>–</p>
+        <p class="muted">Go deeper by watching the full video with these ideas in mind.</p>
+        <a class="next-btn" href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank" rel="noopener">Watch the full video</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="credit">
+    Made with <a href="https://github.com/tstfully/youtube-to-course" target="_blank" rel="noopener">youtube-to-course</a> ·
+    transcript by <a href="https://youtubetranscript.dev" target="_blank" rel="noopener">YouTubeTranscript.dev</a>
+  </footer>
+
+  <script>
+  (function () {
+    var KEY = "yt2course:" + location.pathname + ":" + document.title;
+    function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+    function save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} }
+    var state = load();
+    state.quiz = state.quiz || {};
+    state.recap = state.recap || {};
+
+    // theme toggle
+    var root = document.documentElement;
+    try { var t = localStorage.getItem("yt2course:theme"); if (t) root.setAttribute("data-theme", t); } catch (e) {}
+    document.querySelector(".theme-btn").addEventListener("click", function () {
+      var dark = root.getAttribute("data-theme") === "dark" ||
+        (!root.getAttribute("data-theme") && matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = dark ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("yt2course:theme", next); } catch (e) {}
+    });
+
+    // module nav dots
+    var modules = Array.prototype.slice.call(document.querySelectorAll(".module"));
+    var dots = document.querySelector(".dots");
+    modules.forEach(function (m, i) {
+      if (!m.id) m.id = "module-" + (i + 1);
+      var a = document.createElement("a");
+      a.href = "#" + m.id;
+      a.textContent = i + 1;
+      a.title = (m.querySelector("h2") || {}).textContent || "Module " + (i + 1);
+      dots.appendChild(a);
+    });
+    var dotLinks = dots.querySelectorAll("a");
+
+    // progress + active module
+    var bar = document.querySelector(".progress");
+    function onScroll() {
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+      var current = -1;
+      modules.forEach(function (m, i) { if (m.getBoundingClientRect().top < innerHeight * 0.4) current = i; });
+      dotLinks.forEach(function (d, i) {
+        d.classList.toggle("active", i === current);
+        d.classList.toggle("done", i < current);
+      });
+    }
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // keyboard: n / p jump between modules
+    addEventListener("keydown", function (e) {
+      if (e.target.closest("input, textarea, button") || e.metaKey || e.ctrlKey) return;
+      if (e.key !== "n" && e.key !== "p") return;
+      var y = innerHeight * 0.3, idx = -1;
+      modules.forEach(function (m, i) { if (m.getBoundingClientRect().top < y) idx = i; });
+      var target = e.key === "n" ? modules[idx + 1] || document.getElementById("finish") : modules[Math.max(idx - 1, 0)];
+      if (target) target.scrollIntoView();
+    });
+
+    // quizzes
+    var quizzes = Array.prototype.slice.call(document.querySelectorAll(".quiz"));
+    function updateScore() {
+      var el = document.querySelector("[data-score]");
+      if (!el || !quizzes.length) return;
+      var right = 0, answered = 0;
+      quizzes.forEach(function (q, i) {
+        var r = state.quiz[i];
+        if (r !== undefined) { answered++; if (r) right++; }
+      });
+      el.textContent = answered ? right + " / " + quizzes.length : "–";
+    }
+    quizzes.forEach(function (q, qi) {
+      var opts = q.querySelectorAll("button.opt");
+      function reveal(chosen) {
+        opts.forEach(function (o) {
+          o.disabled = true;
+          if (o.hasAttribute("data-correct")) o.classList.add("correct");
+          else if (o === chosen) o.classList.add("wrong");
+        });
+        q.classList.add("answered");
+      }
+      opts.forEach(function (o, oi) {
+        o.type = "button";
+        o.addEventListener("click", function () {
+          reveal(o);
+          state.quiz[qi] = o.hasAttribute("data-correct");
+          state.quizPick = state.quizPick || {};
+          state.quizPick[qi] = oi;
+          save(state); updateScore();
+        });
+      });
+      if (state.quizPick && state.quizPick[qi] !== undefined && opts[state.quizPick[qi]]) reveal(opts[state.quizPick[qi]]);
+    });
+    updateScore();
+
+    // flashcards
+    document.querySelectorAll(".flashcard").forEach(function (c) {
+      c.setAttribute("type", "button");
+      c.addEventListener("click", function () { c.classList.toggle("flipped"); });
+    });
+
+    // glossary terms are focusable for keyboard and touch
+    document.querySelectorAll(".term").forEach(function (t) { t.tabIndex = 0; });
+
+    // recap checklists
+    document.querySelectorAll(".recap input[type=checkbox]").forEach(function (box, i) {
+      box.checked = !!state.recap[i];
+      box.addEventListener("change", function () { state.recap[i] = box.checked; save(state); });
+    });
+  })();
+  </script>
+</body>
+</html>
