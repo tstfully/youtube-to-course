@@ -1,0 +1,25 @@
+{
+  "name": "youtube-to-course",
+  "version": "1.1.0",
+  "description": "🎓 Turn any YouTube video into an interactive course with quizzes, flashcards, and progress tracking.",
+  "author": {
+    "name": "tstfully",
+    "url": "https://github.com/tstfully"
+  },
+  "homepage": "https://github.com/tstfully/youtube-to-course",
+  "repository": "https://github.com/tstfully/youtube-to-course",
+  "license": "MIT",
+  "keywords": [
+    "course",
+    "education",
+    "quiz",
+    "flashcards",
+    "study",
+    "youtube",
+    "claude-skill",
+    "youtubetranscript"
+  ],
+  "skills": [
+    "./"
+  ]
+}

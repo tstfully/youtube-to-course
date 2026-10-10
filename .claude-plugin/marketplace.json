@@ -1,0 +1,60 @@
+{
+  "name": "youtube-skills",
+  "owner": {
+    "name": "tstfully",
+    "url": "https://github.com/tstfully"
+  },
+  "description": "Free Claude skills that turn YouTube videos into case studies, courses, and chats. Transcripts by YouTubeTranscript.dev.",
+  "plugins": [
+    {
+      "name": "youtube-to-case-study",
+      "source": {
+        "source": "github",
+        "repo": "tstfully/youtube-to-case-study"
+      },
+      "description": "📊 Turn any YouTube video into a business, marketing, UX, or growth case-study slideshow.",
+      "category": "productivity",
+      "tags": [
+        "case-study",
+        "slides",
+        "presentation",
+        "marketing",
+        "ux",
+        "youtube"
+      ]
+    },
+    {
+      "name": "youtube-to-course",
+      "source": {
+        "source": "github",
+        "repo": "tstfully/youtube-to-course"
+      },
+      "description": "🎓 Turn any YouTube video into an interactive course with quizzes, flashcards, and progress tracking.",
+      "category": "productivity",
+      "tags": [
+        "course",
+        "education",
+        "quiz",
+        "flashcards",
+        "study",
+        "youtube"
+      ]
+    },
+    {
+      "name": "youtube-to-ai-chat",
+      "source": {
+        "source": "github",
+        "repo": "tstfully/youtube-to-ai-chat"
+      },
+      "description": "💬 Chat with any YouTube video. Answers cite the exact second, plus a shareable chat page.",
+      "category": "productivity",
+      "tags": [
+        "chat",
+        "q-and-a",
+        "research",
+        "podcast",
+        "youtube"
+      ]
+    }
+  ]
+}

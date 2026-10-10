@@ -14,11 +14,11 @@ Before planning modules, write 3 outcomes as "After this course you can…" stat
 - Good: "Spot the three warning signs of a bad index fund"
 - Bad: "Understand investing" (too vague to test)
 
-## 2. Shape: 4–6 modules
+## 2. Shape: 3–6 modules
 
 | Video length | Modules | Screens per module |
 |---|---|---|
-| Under 15 min | 3–4 | 3–4 |
+| Under 15 min | 3 | 3–4 |
 | 15–60 min | 4–6 | 4–6 |
 | Over 60 min, or several videos | 5–7 | 5–7 |
 

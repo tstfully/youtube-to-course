@@ -180,6 +180,16 @@
     .next-btn { display: inline-block; margin-top: 18px; padding: 12px 20px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; }
     .module-next { margin-top: 36px; }
 
+    .quiz.got-it .explain::before { content: "✅ Nice! "; font-weight: 700; color: var(--good); }
+    .quiz.missed .explain::before { content: "💡 Not quite. "; font-weight: 700; color: var(--warm); }
+    .finish .verdict { font: 700 1.3rem var(--display); margin: 4px 0 16px; }
+    .finish .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+    .ghost-btn { display: inline-block; padding: 12px 20px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: 600 15px var(--body); cursor: pointer; text-decoration: none; }
+    .ghost-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font: 500 14px var(--body); opacity: 0; transition: all .25s; z-index: 50; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .confetti { position: fixed; z-index: 60; width: 9px; height: 13px; border-radius: 2px; pointer-events: none; will-change: transform, opacity; }
+    @media (prefers-reduced-motion: reduce) { .confetti { display: none; } }
     footer.credit { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 16px 40px; }
     footer.credit a { color: var(--muted); }
 
@@ -236,16 +246,22 @@
 
     <section class="finish" id="finish">
       <div class="wrap">
-        <p class="eyebrow">Course complete</p>
-        <h2>Nice work.</h2>
+        <p class="eyebrow">🎉 Course complete</p>
+        <h2>You made it to the end!</h2>
         <p>Your quiz score</p>
         <p class="score" data-score>–</p>
+        <p class="verdict" data-verdict></p>
         <p class="muted">Go deeper by watching the full video with these ideas in mind.</p>
-        <a class="next-btn" href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank" rel="noopener">Watch the full video</a>
+        <div class="actions">
+          <a class="next-btn" href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank" rel="noopener">▶ Watch the full video</a>
+          <button class="ghost-btn" type="button" data-share>📣 Share my score</button>
+          <button class="ghost-btn" type="button" data-reset>🔄 Start over</button>
+        </div>
       </div>
     </section>
   </main>
 
+  <div class="toast" role="status" aria-live="polite"></div>
   <footer class="credit">
     Made with <a href="https://github.com/tstfully/youtube-to-course" target="_blank" rel="noopener">youtube-to-course</a> ·
     transcript by <a href="https://youtubetranscript.dev" target="_blank" rel="noopener">YouTubeTranscript.dev</a>
@@ -321,7 +337,31 @@
         if (r !== undefined) { answered++; if (r) right++; }
       });
       el.textContent = answered ? right + " / " + quizzes.length : "–";
+      var v = document.querySelector("[data-verdict]");
+      if (v) {
+        var all = answered === quizzes.length, pct = right / quizzes.length;
+        v.textContent = !all ? "📝 Answer every quiz to see how you did." :
+          pct === 1 ? "🏆 Perfect score. You really get this!" :
+          pct >= 0.7 ? "💪 Great job! You've got the big ideas." :
+          "📚 Good start. Skim the modules you missed and try again.";
+      }
     }
+    function confetti(x, y, n) {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var colors = ["#1f7a5c", "#d9822b", "#5cc79d", "#f0a35a", "#4f46e5", "#e8572a"];
+      for (var i = 0; i < (n || 26); i++) {
+        var c = document.createElement("span"); c.className = "confetti";
+        c.style.left = x + "px"; c.style.top = y + "px"; c.style.background = colors[i % colors.length];
+        document.body.appendChild(c);
+        var a = Math.random() * Math.PI * 2, d = 60 + Math.random() * 140;
+        c.animate([
+          { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+          { transform: "translate(" + Math.cos(a) * d + "px," + (Math.sin(a) * d + 160) + "px) rotate(" + (Math.random() * 720) + "deg)", opacity: 0 }
+        ], { duration: 900 + Math.random() * 500, easing: "cubic-bezier(.2,.7,.4,1)" }).onfinish = (function (el) { return function () { el.remove(); }; })(c);
+      }
+    }
+    var toastEl = document.querySelector(".toast"), toastT;
+    function toast(msg) { toastEl.textContent = msg; toastEl.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove("show"); }, 2200); }
     quizzes.forEach(function (q, qi) {
       var opts = q.querySelectorAll("button.opt");
       function reveal(chosen) {
@@ -330,13 +370,14 @@
           if (o.hasAttribute("data-correct")) o.classList.add("correct");
           else if (o === chosen) o.classList.add("wrong");
         });
-        q.classList.add("answered");
+        q.classList.add("answered", chosen.hasAttribute("data-correct") ? "got-it" : "missed");
       }
       opts.forEach(function (o, oi) {
         o.type = "button";
         o.addEventListener("click", function () {
           reveal(o);
           state.quiz[qi] = o.hasAttribute("data-correct");
+          if (state.quiz[qi]) { var r = o.getBoundingClientRect(); confetti(r.left + r.width / 2, r.top + r.height / 2); }
           state.quizPick = state.quizPick || {};
           state.quizPick[qi] = oi;
           save(state); updateScore();
@@ -360,6 +401,37 @@
       box.checked = !!state.recap[i];
       box.addEventListener("change", function () { state.recap[i] = box.checked; save(state); });
     });
+
+    // share + reset
+    var shareBtn = document.querySelector("[data-share]");
+    if (shareBtn) shareBtn.addEventListener("click", function () {
+      var score = document.querySelector("[data-score]").textContent;
+      var text = "I just finished \u201c" + document.title + "\u201d and scored " + score + " on the quizzes 🎓";
+      if (navigator.share) { navigator.share({ title: document.title, text: text }).catch(function () {}); return; }
+      try { navigator.clipboard.writeText(text).then(function () { toast("📋 Copied! Paste it anywhere."); }, function () { toast(text); }); }
+      catch (e) { toast(text); }
+    });
+    var resetBtn = document.querySelector("[data-reset]");
+    if (resetBtn) resetBtn.addEventListener("click", function () {
+      if (!confirm("Clear your quiz answers and checklists for this course?")) return;
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      location.hash = ""; location.reload();
+    });
+
+    // celebrate reaching the end with every quiz answered
+    var finish = document.getElementById("finish"), celebrated = false;
+    if (finish && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting || celebrated || !quizzes.length) return;
+          var answered = Object.keys(state.quiz).length;
+          if (answered < quizzes.length) return;
+          celebrated = true;
+          var r = document.querySelector("[data-score]").getBoundingClientRect();
+          confetti(r.left + r.width / 2, r.top, 70);
+        });
+      }, { threshold: 0.5 }).observe(finish);
+    }
   })();
   </script>
 </body>

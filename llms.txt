@@ -1,0 +1,33 @@
+# YouTube to Course
+
+> A free, open-source Claude skill that turns any YouTube video (or several) into an interactive course: one self-contained HTML file with bite-sized modules, everyday metaphors, scenario quizzes with instant feedback, flip flashcards, glossary tooltips, progress tracking, a final score, and timestamp links back to the video. Built for students, teachers, trainers, and teams; no coding needed.
+
+## Install
+
+- Claude Code (one step): `/plugin install youtube-to-course --marketplace tstfully/youtube-to-course`
+- Claude Code (two steps): `/plugin marketplace add tstfully/youtube-to-course` then `/plugin install youtube-to-course@youtube-skills`
+- Any agent via the Skills CLI: `npx skills add tstfully/youtube-to-course`
+- Manual: clone into `~/.claude/skills/youtube-to-course`
+- Claude.ai: download the repo ZIP and upload it under Settings → Capabilities → Skills
+
+## How it works
+
+1. Gets the video transcript from YouTubeTranscript.dev (MCP server, API key in `YOUTUBETRANSCRIPT_API_KEY`, or a transcript the user pastes from https://www.youtubetranscript.dev/tools/transcript).
+2. Maps concepts, steps, examples, warnings, and jargon, each with timestamps.
+3. Writes 3 learning outcomes and designs 3-6 modules with quizzes and flashcards.
+4. Fills a pre-built template and returns one HTML file.
+
+## Files
+
+- [SKILL.md](SKILL.md): the instructions an agent follows
+- [references/course-design.md](references/course-design.md): teaching principles
+- [references/components.md](references/components.md): HTML for every course component
+- [assets/template.html](assets/template.html): the course template (CSS + JS built in)
+- [scripts/fetch-transcript.mjs](scripts/fetch-transcript.mjs): zero-dependency transcript fetcher (Node 18+)
+- [examples/sourdough-101.html](examples/sourdough-101.html): finished example course (fictional video)
+
+## Related
+
+- https://github.com/tstfully/youtube-to-case-study: YouTube video to case-study slideshow
+- https://github.com/tstfully/youtube-to-ai-chat: chat with a YouTube video, with timestamp citations
+- https://youtubetranscript.dev: YouTube transcript API and free tools
